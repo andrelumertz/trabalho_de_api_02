@@ -1,8 +1,8 @@
-import { diretor } from "../models/Diretor.js";
+import { diretor } from "../models/Diretor.js"; // importa o diretor
 
-class DiretorController { 
+class DiretorController { // cria uma classe DiretorController
 
-    static async listarDiretores (req, res) {
+    static async listarDiretores (req, res) { // cria um método estático que lista os diretores
        try { 
            const listaDiretores = await diretor.find({});
            res.status(200).json(listaDiretores);
