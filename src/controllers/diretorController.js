@@ -17,18 +17,17 @@ class DiretorController { // cria uma classe DiretorController
             const id = req.params.id;
             const diretorEncontrado = await diretor.findById(id);
             res.status(200).json(diretorEncontrado);
-         
         } catch (erro) {
-         res.status(500).json({ message: `${erro.message} - falha na requisição do filme.` });
+         res.status(500).json({ message: `${erro.message} - falha na requisição do diretor.` });
         }
      };
 
     static async cadastrarDiretor (req, res) {
         try {
             const novoDiretor = await diretor.create(req.body);
-            res.status(201).json({ message: "Filme cadastrado com sucesso!", diretor: novoDiretor });
+            res.status(201).json({ message: "Diretor cadastrado com sucesso!", filme: novoDiretor });
         } catch (erro) {
-            res.status(500).json({ message: `${erro.message} - falha ao cadastrar filme.` });
+            res.status(500).json({ message: `${erro.message} - falha ao cadastrar diretor.` });
         }
     }
 
@@ -37,9 +36,8 @@ class DiretorController { // cria uma classe DiretorController
             const id = req.params.id;
             await diretor.findByIdAndUpdate(id, req.body);
             res.status(200).json({ message: "Diretor atualizado com sucesso!" })
-         
         } catch (erro) {
-         res.status(500).json({ message: `${erro.message} - falha ao atualizar filme.` });
+         res.status(500).json({ message: `${erro.message} - falha na atualização.` });
         }
      };
 
@@ -47,13 +45,10 @@ class DiretorController { // cria uma classe DiretorController
         try { 
             const id = req.params.id;
             await diretor.findByIdAndDelete(id);
-            res.status(200).json({ message: "Diretor excluido com sucesso!" })
-         
+            res.status(200).json({ message: "Diretor excluido com sucesso!" });
         } catch (erro) {
-         res.status(500).json({ message: `${erro.message} - falha na exclusão do filme.` });
+         res.status(500).json({ message: `${erro.message} - falha na exclusão de diretor.` });
         }
-        
-        
      };
     };
 

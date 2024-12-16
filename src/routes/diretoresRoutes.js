@@ -1,5 +1,6 @@
 import express from "express";
 import DiretorController from "../controllers/diretorController.js"; // Importe o controlador DiretorController
+
 const routes = express.Router(); // Crie uma instância do roteador Express
 
 routes.get("/diretores", DiretorController.listarDiretores); // Rota para listar todos os diretores
