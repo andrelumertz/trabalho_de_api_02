@@ -25,7 +25,7 @@ class DiretorController { // cria uma classe DiretorController
     static async cadastrarDiretor (req, res) {
         try {
             const novoDiretor = await diretor.create(req.body);
-            res.status(201).json({ message: "Diretor cadastrado com sucesso!", filme: novoDiretor });
+            res.status(201).json({ message: `O Diretor ${novoDiretor.nome} foi cadastrado com sucesso!`, filme: novoDiretor });
         } catch (erro) {
             res.status(500).json({ message: `${erro.message} - falha ao cadastrar diretor.` });
         }
@@ -44,8 +44,8 @@ class DiretorController { // cria uma classe DiretorController
      static async excluirDiretor (req, res) {
         try { 
             const id = req.params.id;
-            await diretor.findByIdAndDelete(id);
-            res.status(200).json({ message: "Diretor excluido com sucesso!" });
+            const diretorExcluido = await diretor.findByIdAndDelete(id);
+            res.status(200).json({ message: `O Diretor ${diretorExcluido.nome} foi excluido com sucesso!` });
         } catch (erro) {
          res.status(500).json({ message: `${erro.message} - falha na exclusão de diretor.` });
         }

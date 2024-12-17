@@ -17,6 +17,9 @@ class FilmeController {
         try { 
             const id = req.params.id;
             const filmeEncontrado = await filme.findById(id);
+            if (!filmeEncontrado) {
+                return res.status(404).json({ message: "Filme não encontrado, tente novamente!." });
+            }
             res.status(200).json(filmeEncontrado);
         } catch (erro) {
          res.status(500).json({ message: `${erro.message} - falha na requisição do filme.` });
@@ -24,7 +27,7 @@ class FilmeController {
      };
 
      static async cadastrarFilme (req, res) {
-        // const novoFilme = req.body;
+        //const novoFilme = req.body;
         // try {
         //     const autorEncontrado = await autor.findById(novoLivro.autor);
         //     const livroCompleto = { ...novoLivro, autor: { ...autorEncontrado._doc }};
@@ -36,7 +39,7 @@ class FilmeController {
         try {
             
             const novoFilme = await filme.create(req.body);
-            res.status(201).json({ message: "Filme cadastrado com sucesso!" })
+            res.status(201).json({ message: `Filme ${ novoFilme.titulo } cadastrado com sucesso!` })
 
         } catch (erro) {
          res.status(500).json({ message: `${erro.message} - falha ao cadastrar filme.` });
@@ -46,7 +49,11 @@ class FilmeController {
     static async atualizarFilme (req, res) {
         try { 
             const id = req.params.id;
-            await filme.findByIdAndUpdate(id, req.body); // Atualiza o filme com base no ID fornecido, no moongose é dessa forma o findByIdAndUpdate para ser utilizado.
+            const filmeAtualizado = await filme.findByIdAndUpdate(id, req.body); // Atualiza o filme com base no ID fornecido, no moongose é dessa forma o findByIdAndUpdate para ser utilizado.
+            
+            if (!filmeAtualizado) {
+                return res.status(404).json({ message: "Filme não encontrado." });
+            }
             res.status(200).json({ message: "Filme atualizado com sucesso!" })
          
         } catch (erro) {
@@ -55,10 +62,15 @@ class FilmeController {
      };
 
      static async excluirFilme (req, res) {
+
         try { 
             const id = req.params.id;
-            await filme.findByIdAndDelete(id); //metodo para deletar um filme pelo id com mongoose 
-            res.status(200).json({ message: "Filme excluido com sucesso!" })
+            const filmeExcluido = await filme.findByIdAndDelete(id);
+            if (!filmeExcluido) {
+                return res.status(404).json({ message: "Filme não encontrado." });
+            }
+             //metodo para deletar um filme pelo id com mongoose 
+            res.status(200).json({ message: `O Filme ${filmeExcluido.titulo} foi excluido com sucesso!` })
          
         } catch (erro) {
          res.status(500).json({ message: `${erro.message} - falha na exclusão do filme.` });
@@ -67,6 +79,9 @@ class FilmeController {
 
      static async listarFilmesPorProdutora (req, res) {
        const produtora = req.query.produtora;
+       if (!produtora) {
+        return res.status(400).json({ message: "Produtora não especificada." });
+    }
        try {
         const filmesPorProdutora = await filme.find({ produtora: produtora });
            res.status(200).json(filmesPorProdutora);
