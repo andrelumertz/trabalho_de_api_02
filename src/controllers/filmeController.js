@@ -27,15 +27,6 @@ class FilmeController {
      };
 
      static async cadastrarFilme (req, res) {
-        //const novoFilme = req.body;
-        // try {
-        //     const autorEncontrado = await autor.findById(novoLivro.autor);
-        //     const livroCompleto = { ...novoLivro, autor: { ...autorEncontrado._doc }};
-        //     const livroCriado = await livro.create(livroCompleto);
-        //     res.status(201).json({ message: "criado com sucesso", livro: livroCriado });
-        //   } catch (erro) {
-        //     res.status(500).json({ message: `${erro.message} - falha ao cadastrar livro` });
-        //   }
         try {
             
             const novoFilme = await filme.create(req.body);
